@@ -1,0 +1,96 @@
+body{
+	margin: 0;
+}
+
+table{
+	border-collapse:collapse;
+}
+
+td,th{
+	padding: 0; 
+	boeder: 0;
+}
+
+/*eclipse默认字体,用于显示代码*/
+@font-face {
+	font-family: CourierNew; 
+	src: url("../../css/font/Courier New Bold.ttf");
+}
+
+/*文本域内文字不折行,超过宽度显示滚动条*/
+textarea{
+	font-family: CourierNew;
+	white-space: nowrap;
+	overflow: auto;
+	padding: 0;
+	resize: none;
+	display: block;
+}
+
+.hide{
+	display: none;
+}
+
+.board{
+	line-height: 20px; 
+	margin:10px;
+}
+
+/*菜单*/
+#menu{
+	width: 200px;
+}
+.li{
+	height: 30px;
+	width: 100%;
+	line-height: 30px;
+	font-size: 12px;
+	padding-left: 20px;
+	padding-right: 20px; 
+}
+.li:hover{
+	background-color: #eee;
+}
+.hr{
+	border-top: 1px solid #ccc;
+	height: 0;
+	width: 100%;
+}
+.space{
+	margin-right: 10px;
+}
+.space-noicon{
+	margin-right: 26px;
+}
+
+/*页面*/
+#head{
+	height: 30px;
+	padding:0 10px;
+	background-color: #eee;
+	line-height: 30px;
+	font-size: 14px;
+}
+#head_title{
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	height: 30px;
+	text-align: center;
+	float: left;
+}
+#head_btn_back{
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	float: left;
+}
+#head_btn_op{
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	float: right;
+}
+#head i{
+	font-size: 20px;
+}

@@ -1,0 +1,21 @@
+body{
+	width: 400px;
+	font: 14px "\5FAE\8F6F\96C5\9ED1";
+	margin: 0;
+}
+ul{
+	margin: 0 auto;
+	padding: 10px;
+}
+li{
+	height: 30px;
+	line-height: 30px;
+	list-style-type:none;
+	padding: 0 10px;
+}
+li:hover{
+	background-color: rgb(225,225,225);
+}
+.active{
+	background-color: rgb(152,217,234);
+}

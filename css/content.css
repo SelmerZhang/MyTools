@@ -1,0 +1,12 @@
+#to_top_btn {
+	display: none;
+	position: fixed;
+	background-size: cover;
+	opacity: 0.8;
+	z-index: 999999;
+}
+#to_top_btn:hover {
+	background-size: cover;
+	opacity: 0.8;
+	z-index: 999999;
+}
