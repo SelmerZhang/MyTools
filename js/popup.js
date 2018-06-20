@@ -141,11 +141,13 @@ function setMenuKeyMap() {
  */
 function menuEvent(e) {
 	if (e.type == 'page') {
-		//打开页面
+		//加载小页面
 		loadPage(e);
-	} else if (e.type = 'tab') {
+	} else if (e.type == 'tab') {
+		//新标签页打开
 		openTab(e);
-	} else if (e.type = 'fn') {
+	} else if (e.type == 'fn') {
+		// 执行脚本
 		e.do();
 	}
 }
