@@ -5,6 +5,8 @@
 //		pageInit[必填]页面初始化函数,需要传入page页面注入的目标DIV的ID,调用格式:pageInit('main')()
 //	2.hr,菜单分割线
 //	3.fn直接调用do指定的函数
+//	4.tab在新的tab页显示页面:
+//		path[必填]新标签页的路径,标签页默认在./page/tabs/ 下,这里只需要补充剩余路径
 //name[选填]:菜单内文字
 //key[选填]:菜单的键盘快捷键
 //icon[选填]:菜单的小图标
@@ -15,22 +17,6 @@ var menu = [{
 	icon: 'scan',
 	title: '二维码转换',
 	pageInit: createQrPage
-}, {
-	type: 'hr'
-}, {
-	type: 'page',
-	name: '英文大小写转换',
-	key: 't',
-	icon: 'edit',
-	title: '英文大小写转换',
-	pageInit: createEnUtilsPage
-}, {
-	type: 'page',
-	name: 'SQL转实体类',
-	key: 's',
-	icon: 'reload',
-	title: 'SQL转实体类',
-	pageInit: createQTCPage
 }, {
 	type: 'hr'
 }, {
@@ -45,8 +31,23 @@ var menu = [{
 	key: '2',
 	icon: 'xiangxiajiantou',
 	do: toBottom
+}, {
+	type: 'hr'
+}, {
+	type: 'tab',
+	name: '英文大小写转换',
+	key: 't',
+	icon: 'edit',
+	path: 'en-utils.html'
+}, {
+	type: 'tab',
+	name: 'SQL转实体类',
+	key: 's',
+	icon: 'reload',
+	path: 'qtc.html'
 }]
 
+/*------------------------------菜单初始化 开始------------------------------*/
 $(function() {
 	initMenu();
 
@@ -113,12 +114,7 @@ function initLi(e) {
 	$li.click(function(event) {
 		//只处理鼠标左键点击
 		if (event.which != 1) return;
-		if (e.type == 'page') {
-			//打开页面
-			loadPage(e);
-		} else if (e.type = 'fn') {
-			e.do();
-		}
+		menuEvent(e);
 	});
 
 	return $li;
@@ -131,19 +127,30 @@ function setMenuKeyMap() {
 	$('html').keypress(function(event) {
 		$(menu).each(function(i, e) {
 			if ((e.key + '').toUpperCase() == (event.key + '').toUpperCase()) {
-				if (e.type == 'page') {
-					//打开页面
-					loadPage(e);
-				} else if (e.type = 'fn') {
-					e.do();
-				}
-				//只相应第一个匹配的快捷键,避免错误配置了重复的快捷键
+				menuEvent(e);
+				//只响应第一个匹配的快捷键,避免错误配置了重复的快捷键
 				return false;
 			}
 		});
 	});
 }
 
+/**
+ * 统一处理菜单点击和菜单快捷键事件,根据菜单不同类型执行不同操作
+ * @param  {[type]} e 菜单项配置
+ */
+function menuEvent(e) {
+	if (e.type == 'page') {
+		//打开页面
+		loadPage(e);
+	} else if (e.type = 'tab') {
+		openTab(e);
+	} else if (e.type = 'fn') {
+		e.do();
+	}
+}
+
+/*------------------------------page类菜单 开始------------------------------*/
 /**
  * 载入功能页面
  * @param  {object} e 页面配置
@@ -187,24 +194,25 @@ function replace(str, reg, newStr) {
 	return str.replace(reg, newStr);
 }
 
-/**
- * 向页面发送跳转信息
- * @param  {object} msg 发送给页面的消息
- * @param  {Function} callback 页面返回成功后回调函数
- */
-function sendMsgToContent(msg, callback) {
-	msg.request = 'content';
-	chrome.tabs.query({
-		active: true,
-		currentWindow: true
-	}, function(tabs) {
-		chrome.tabs.sendMessage(tabs[0].id, msg, function(response) {
-			if (typeof response != 'undefined') {
-				callback();
-			}
-		});
+/*------------------------------page类菜单 结束------------------------------*/
+
+/*------------------------------tab类菜单 开始------------------------------*/
+
+
+function openTab(e) {
+	chrome.tabs.create({
+		index: 0,
+		url: '../page/tabs/' + e.path,
+	}, (tab) => {
+		window.close;
 	});
 }
+
+
+
+/*------------------------------tab类菜单 结束------------------------------*/
+
+/*------------------------------fn类菜单 开始------------------------------*/
 
 /**
  * 跳到页首,成功则关闭popup页面
@@ -223,3 +231,26 @@ function toBottom() {
 		to: 'bottom'
 	}, window.close);
 }
+/*------------------------------fn类菜单 结束------------------------------*/
+/*------------------------------菜单初始化 结束------------------------------*/
+
+/*------------------------------工具函数 开始------------------------------*/
+/**
+ * 向页面发送跳转信息
+ * @param  {object} msg 发送给页面的消息
+ * @param  {Function} callback 页面返回成功后回调函数
+ */
+function sendMsgToContent(msg, callback) {
+	msg.request = 'content';
+	chrome.tabs.query({
+		active: true,
+		currentWindow: true
+	}, function(tabs) {
+		chrome.tabs.sendMessage(tabs[0].id, msg, function(response) {
+			if (typeof response != 'undefined') {
+				callback();
+			}
+		});
+	});
+}
+/*------------------------------工具函数 结束------------------------------*/

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>SQL转实体类</title>
+	<link rel="stylesheet" type="text/css" href="/css/font/iconfont.css">
+	<link rel="stylesheet" type="text/css" href="/css/buttons.css">
+	<link rel="stylesheet" type="text/css" href="/css/popup.css">
+	<style type="text/css"> 
+		th{text-align: center;} 
+		textarea{width: 100%;height: 600px;} 
+	</style> 
+</head>
+<body>
+	<div class="board"> 
+		<button id="change" class="button button-primary button-rounded button-small" style="padding: 0 16px;">转换</button> 
+		注意：1.暂时只适用于Navicat导出的orcle建表语句；2.主键参数默认叫id，添加@Id注解  
+		<table width="100%"> 
+			<col width="50%"/> 
+			<col width="50%"> 
+			<tr> 
+				<th>SQL语句</th> 
+				<th>实体类代码</th> 
+			</tr> 
+			<tr> 
+				<td><textarea id="sql"></textarea></td> 
+				<td><textarea id="code"></textarea></td> 
+			</tr> 
+		</table> 
+	</div>
+	<script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="/js/tabs/qtc.js"></script>
+</body>
+</html>

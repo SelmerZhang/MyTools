@@ -51,7 +51,8 @@
     ],
     // 权限申请
     "permissions": [
-        "tabs" // 标签
+        "tabs"// 标签
+        // ,"chrome-extension://*" //跨域
     ],
     //插件设置界面
     "options_page": "page/setting.html",
